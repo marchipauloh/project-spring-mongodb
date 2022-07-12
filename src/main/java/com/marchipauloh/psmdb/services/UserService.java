@@ -1,12 +1,14 @@
 package com.marchipauloh.psmdb.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.marchipauloh.psmdb.domain.User;
 import com.marchipauloh.psmdb.repository.UserRepository;
+import com.marchipauloh.psmdb.services.exception.ObjectNotFoundException;
 
 @Service
 public class UserService {
@@ -18,4 +20,8 @@ public class UserService {
 		return userRepository.findAll();
 	}
 
+	public User findById(String id) {
+		Optional<User> obj = userRepository.findById(id);
+		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado"));
+	}
 }
